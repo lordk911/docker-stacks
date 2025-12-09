@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
-ARG BASE_IMAGE=$REGISTRY/$OWNER/scipy-notebook
+ARG BASE_IMAGE=$REGISTRY/$OWNER/scipy-notebook:python-3.11
 FROM $BASE_IMAGE
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -17,6 +17,8 @@ USER root
 # Default values can be overridden at build time
 # (ARGS are in lowercase to distinguish them from ENV)
 ARG openjdk_version="17"
+
+ENV TZ=Asia/Shanghai
 
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
