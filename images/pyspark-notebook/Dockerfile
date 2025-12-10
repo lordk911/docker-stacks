@@ -83,14 +83,23 @@ RUN mamba install --yes \
     'pandas=2.2.3' \
     'pyarrow' && \
     pip install \
+    'notebook' \
     'jupyter-collaboration' \
     'jupyter-mcp-server>=0.15.0' \
     'datalayer_pycrdt>=0.12.17' \
     'jupyter_mcp_tools' \
     'jupyter-ai[all]' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
+    mamba clean --all -f -y
+
+USER root
+
+# 执行权限修复操作
+# 确保 fix-permissions 脚本以 root 权限执行，以成功使用 chgrp/chmod
+RUN fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+# 步骤 3: 切换回非 root 用户作为最终运行用户
+USER ${NB_UID}
 
 WORKDIR "${HOME}"
 EXPOSE 4040
