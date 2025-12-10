@@ -26,8 +26,8 @@ ENV TZ=Asia/Shanghai
 #deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-security main restricted universe multiverse\n" \
 #> /etc/apt/sources.list
 
-RUN printf "channels:\n  - defaults\nshow_channel_urls: true\ndefault_channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r\ncustom_channels:\n  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n" > /root/.condarc
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+#RUN printf "channels:\n  - defaults\nshow_channel_urls: true\ndefault_channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r\ncustom_channels:\n  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud\n" > /root/.condarc
+#RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -81,13 +81,13 @@ RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
     'pandas=2.2.3' \
-    'jupyter-ai[all]' \
-    'jupyter-collaboration' \
     'pyarrow' && \
     pip install \
+    'jupyter-collaboration' \
     'jupyter-mcp-server>=0.15.0' \
     'datalayer_pycrdt>=0.12.17' \
-    'jupyter_mcp_tools' && \
+    'jupyter_mcp_tools' \
+    'jupyter-ai[all]' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
