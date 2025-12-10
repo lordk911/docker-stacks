@@ -72,6 +72,11 @@ RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
     'pandas=2.2.3' \
+    'jupyter-ai[all]' \
+    'jupyter-collaboration' \
+    'jupyter-mcp-server>=0.15.0' \
+    'datalayer_pycrdt>=0.12.17' \
+    'jupyter_mcp_tools'  \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
