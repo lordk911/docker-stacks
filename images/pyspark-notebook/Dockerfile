@@ -88,11 +88,14 @@ RUN mamba install --yes \
     'jupyter-mcp-server>=0.15.0' \
     'datalayer_pycrdt>=0.12.17' \
     'jupyter_mcp_tools' \
-    'jupyter-ai[all]' && \
+    'jupyter-ai' \
+    'langchain-anthropic' \
+    'langchain-openai' && \
     mamba clean --all -f -y
 
 USER root
 
+RUN rm -rf "/home/${NB_USER}/.cache/"
 # 执行权限修复操作
 # 确保 fix-permissions 脚本以 root 权限执行，以成功使用 chgrp/chmod
 RUN fix-permissions "${CONDA_DIR}" && \
